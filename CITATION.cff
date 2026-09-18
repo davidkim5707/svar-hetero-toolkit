@@ -1,0 +1,35 @@
+cff-version: 1.2.0
+title: "hars: MATLAB code for the HARS sampler"
+message: >-
+  If you use this software, please cite the paper listed under
+  preferred-citation.
+type: software
+authors:
+  - family-names: Kim
+    given-names: Dawis
+  - family-names: Zha
+    given-names: Tao
+repository-code: "https://github.com/davidkim5707/hars"
+keywords:
+  - structural vector autoregression
+  - heteroskedasticity
+  - sign restrictions
+  - narrative restrictions
+  - Bayesian econometrics
+  - MATLAB
+license: MIT
+preferred-citation:
+  type: report
+  title: "Sharpening Economic Interpretation with HARS"
+  authors:
+    - family-names: Kim
+      given-names: Dawis
+    - family-names: Zha
+      given-names: Tao
+  institution:
+    name: National Bureau of Economic Research
+  number: "w35483"
+  doi: "10.3386/w35483"
+  month: 7
+  year: 2026
+  url: "https://www.nber.org/papers/w35483"

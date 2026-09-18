@@ -1,0 +1,18 @@
+# OS and editor
+Thumbs.db
+desktop.ini
+.DS_Store
+*.asv
+
+# Temporary files written by the Sims optimizer (bfgsi.m, csminwel.m)
+H.dat
+g1.mat
+g2.mat
+g3.mat
+
+# Everything main.m writes
+replications/*/output/*
+!replications/*/output/.gitkeep
+
+# Over GitHub's 100 MB file limit. See README.md for the download link.
+replications/kim_zha2026_hars/baselines/irfs_ramirez_monetary.mat
