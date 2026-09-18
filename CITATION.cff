@@ -19,6 +19,8 @@ keywords:
   - Bayesian econometrics
   - MATLAB
 license: MIT
+version: 1.0.0
+date-released: "2026-09-18"
 preferred-citation:
   type: report
   title: "Sharpening Economic Interpretation with HARS"
