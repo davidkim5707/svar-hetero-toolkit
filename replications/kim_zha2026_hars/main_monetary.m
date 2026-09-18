@@ -12,7 +12,7 @@
 % machine. Expect roughly 2x the single-run wall clock.
 %==========================================================================
 clc; clear; close all;
-addpath(genpath(fullfile('..','..','core')), genpath(fullfile('..','..','third_party')));
+addpath(genpath(fullfile('..','..','code','core')), genpath(fullfile('..','..','code','third_party')));
 
 %% ---- Run 1: HARS baseline (N_theta = 100) ------------------------------
 NTHETA = 100;
@@ -21,13 +21,13 @@ save_slim(fullfile('output', 'results_monetary.mat'), output, options, run_total
 
 %% ---- Run 2: HARS ablation (N_theta = 0) --------------------------------
 clear; NTHETA = 0;
-addpath(genpath(fullfile('..','..','core')), genpath(fullfile('..','..','third_party')));
+addpath(genpath(fullfile('..','..','code','core')), genpath(fullfile('..','..','code','third_party')));
 run('run_monetary.m');
 save_slim(fullfile('output', 'results_monetary_nostrucredraw.mat'), output, options, run_total_sec);
 
 %% ---- Figures + tables --------------------------------------------------
 clear; close all;
-addpath(genpath(fullfile('..','..','core')), genpath(fullfile('..','..','third_party')));
+addpath(genpath(fullfile('..','..','code','core')), genpath(fullfile('..','..','code','third_party')));
 R  = load(fullfile('output', 'results_monetary.mat'));
 R0 = load(fullfile('output', 'results_monetary_nostrucredraw.mat'));
 make_figures(R, 'baselines', fullfile('output', 'figures'));

@@ -18,7 +18,7 @@ run('main_oil.m');
 run('main_fiscal.m');
 
 clear; close all;
-addpath(genpath(fullfile('..','..','core')), genpath(fullfile('..','..','third_party')));
+addpath(genpath(fullfile('..','..','code','core')), genpath(fullfile('..','..','code','third_party')));
 
 Rm  = load(fullfile('output','results_monetary.mat'));
 Rm0 = load(fullfile('output','results_monetary_nostrucredraw.mat'));

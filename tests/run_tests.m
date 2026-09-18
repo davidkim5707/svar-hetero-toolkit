@@ -1,7 +1,7 @@
 %==========================================================================
 % run_tests.m -- run the self-tests of the zero-restriction routines.
 %
-% Each test builds a synthetic cache, runs one routine of core/zero, and
+% Each test builds a synthetic cache, runs one routine of code/core/zero, and
 % prints PASS or FAIL per check. A failing check raises an error.
 % Runtime is under a minute.
 %==========================================================================

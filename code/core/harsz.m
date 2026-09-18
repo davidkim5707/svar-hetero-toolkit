@@ -9,7 +9,8 @@
 %     options                                     VAR, prior, restriction,
 %                                                 and sampler settings
 %   in the workspace, and the sampler leaves its results in the struct
-%   output. examples/ex01_harsz_balance_sheet.m shows every field it sets.
+%   output. examples/ex02_harsz_balance_sheet.m shows a complete driver, and
+%   docs/options.md and docs/output.md document every field.
 %
 %   ZERO RESTRICTIONS. options.ZeroRestrictions is a struct array with fields
 %   variable_idx, shock_idx, horizon, and regime_idx. Each entry sets one
@@ -31,7 +32,7 @@
 %     output.draw_weight_final  draw_weightA, divided by omega_hat when
 %                               options.use_nrr_omega is true
 %   Weighted medians and quantiles use output.draw_weight_final.
-%   python/hars_z_weights.py rebuilds these weights from a saved output.
+%   code/python/hars_z_weights.py rebuilds these weights from a saved output.
 %
 %   Hybrid Gibbs-MH-ESS sampler with:
 %     1. Precomputed theta-cache (removes repeated stability/A0inv calls)
@@ -75,10 +76,10 @@
 %   AD-RR-style weighted estimand.
 %
 %   Required helpers:
-%     core/posterior, core/restrictions, core/rotation, core/util, as for
-%     hars.m, plus core/zero (build_zero_constraint, draw_Q_zero_columnwise,
+%     posterior/, restrictions/, rotation/, and util/ in this folder, as for
+%     hars.m, plus zero/ (build_zero_constraint, draw_Q_zero_columnwise,
 %     ess_draw_Q_zero_columnwise, gaussian_to_Q_zero, find_admissible_Q_zero,
-%     log_volume_element_zero) and third_party/arrw2018 for the volume
+%     log_volume_element_zero) and code/third_party/arrw2018 for the volume
 %     element.
 %==========================================================================
 
@@ -1148,7 +1149,7 @@ if use_signrestrictions
     draw_By_all             = cell(max_expected, 1);
     draw_fsign_all          = cell(max_expected, 1);
     draw_fsign_cell_all     = cell(max_expected, 1);
-    draw_weight_all         = ones(max_expected, 1);   %  1/omega_hat weight (== 1 when toggle off)
+    draw_weight_all         = ones(max_expected, 1);   %  volume element of the draw (== 1 without zeros)
     draw_block_all          = zeros(max_expected, 1);  % Theta-block id (index d of eq. summary_estimator)
     draw_omega_all          = ones(max_expected, 1);   %  per-draw omega_hat
     om_diag_all             = cell(max_expected, 1);   %  per-draw omega diagnostics

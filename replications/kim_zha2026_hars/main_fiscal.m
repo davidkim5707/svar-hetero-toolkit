@@ -11,7 +11,7 @@
 % Three HARS runs execute every time. This file also runs standalone.
 %==========================================================================
 clc; clear; close all;
-addpath(genpath(fullfile('..','..','core')), genpath(fullfile('..','..','third_party')));
+addpath(genpath(fullfile('..','..','code','core')), genpath(fullfile('..','..','code','third_party')));
 
 %% ---- Run 1: homoskedastic (REGIME_ON = 0, N_theta = 100) ---------------
 REGIME_ON = 0; NTHETA = 100;
@@ -20,19 +20,19 @@ save_slim(fullfile('output', 'results_fiscal_homosk.mat'), output, options, run_
 
 %% ---- Run 2: 3-regime baseline (REGIME_ON = 1, N_theta = 100) -----------
 clear; REGIME_ON = 1; NTHETA = 100;
-addpath(genpath(fullfile('..','..','core')), genpath(fullfile('..','..','third_party')));
+addpath(genpath(fullfile('..','..','code','core')), genpath(fullfile('..','..','code','third_party')));
 run('run_fiscal.m');
 save_slim(fullfile('output', 'results_fiscal.mat'), output, options, run_total_sec);
 
 %% ---- Run 3: 3-regime ablation (REGIME_ON = 1, N_theta = 0) -------------
 clear; REGIME_ON = 1; NTHETA = 0;
-addpath(genpath(fullfile('..','..','core')), genpath(fullfile('..','..','third_party')));
+addpath(genpath(fullfile('..','..','code','core')), genpath(fullfile('..','..','code','third_party')));
 run('run_fiscal.m');
 save_slim(fullfile('output', 'results_fiscal_nostrucredraw.mat'), output, options, run_total_sec);
 
 %% ---- Figures + tables --------------------------------------------------
 clear; close all;
-addpath(genpath(fullfile('..','..','core')), genpath(fullfile('..','..','third_party')));
+addpath(genpath(fullfile('..','..','code','core')), genpath(fullfile('..','..','code','third_party')));
 Rh = load(fullfile('output', 'results_fiscal_homosk.mat'));
 R  = load(fullfile('output', 'results_fiscal.mat'));
 R0 = load(fullfile('output', 'results_fiscal_nostrucredraw.mat'));

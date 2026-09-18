@@ -11,7 +11,7 @@
 % This file also runs standalone.
 %==========================================================================
 clc; clear; close all;
-addpath(genpath(fullfile('..','..','core')), genpath(fullfile('..','..','third_party')));
+addpath(genpath(fullfile('..','..','code','core')), genpath(fullfile('..','..','code','third_party')));
 
 %% ---- Run 1: HARS baseline (N_theta = 100) ------------------------------
 NTHETA = 100;
@@ -20,13 +20,13 @@ save_slim(fullfile('output', 'results_oil.mat'), output, options, run_total_sec)
 
 %% ---- Run 2: HARS ablation (N_theta = 0) --------------------------------
 clear; NTHETA = 0;
-addpath(genpath(fullfile('..','..','core')), genpath(fullfile('..','..','third_party')));
+addpath(genpath(fullfile('..','..','code','core')), genpath(fullfile('..','..','code','third_party')));
 run('run_oil.m');
 save_slim(fullfile('output', 'results_oil_nostrucredraw.mat'), output, options, run_total_sec);
 
 %% ---- Figures + tables --------------------------------------------------
 clear; close all;
-addpath(genpath(fullfile('..','..','core')), genpath(fullfile('..','..','third_party')));
+addpath(genpath(fullfile('..','..','code','core')), genpath(fullfile('..','..','code','third_party')));
 R  = load(fullfile('output', 'results_oil.mat'));
 R0 = load(fullfile('output', 'results_oil_nostrucredraw.mat'));
 make_oil_figures(R, 'baselines', fullfile('output', 'figures'));

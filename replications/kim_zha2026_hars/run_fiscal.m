@@ -20,7 +20,7 @@ warning('off', 'MATLAB:divideByZero');
 %% Data loading and setting
 %********************************************************
 
-addpath(genpath(fullfile('..','..','core')), genpath(fullfile('..','..','third_party')));
+addpath(genpath(fullfile('..','..','code','core')), genpath(fullfile('..','..','code','third_party')));
 
 % === DATASET VARIANT ===
 % 'mu_reduced_ver2' -> MU-style 5-var: net taxes, G, GDP, 3-month T-bill (level), GDP deflator

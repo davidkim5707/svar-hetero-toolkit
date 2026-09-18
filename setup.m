@@ -1,17 +1,22 @@
 %==========================================================================
-% setup.m -- add core/ and third_party/ to the MATLAB path.
+% setup.m -- add the library to the MATLAB path.
 %
-% Run once per session from anywhere:  run('<path to repo>/setup.m')
-% The replication drivers under replications/ add the same two folders
-% themselves, so they do not need this script.
+% Adds code/core and code/third_party with their subfolders. Run once per
+% session from anywhere:  run('<path to repository>/setup.m')
+% The examples and the tests call this script themselves. The replication
+% drivers add the same two folders without it.
 %==========================================================================
-hars_root__ = fileparts(mfilename('fullpath'));
-addpath(genpath(fullfile(hars_root__, 'core')), ...
-        genpath(fullfile(hars_root__, 'third_party')));
+repo_root__ = fileparts(mfilename('fullpath'));
+addpath(genpath(fullfile(repo_root__, 'code', 'core')), ...
+        genpath(fullfile(repo_root__, 'code', 'third_party')));
 
 if verLessThan('matlab', '9.8')
-    warning('hars:setup:oldMatlab', ...
+    warning('setup:oldMatlab', ...
         'MATLAB R2020a or newer is required for exportgraphics; figures will not be written.');
 end
-fprintf('[setup] added core/ and third_party/ under %s\n', hars_root__);
-clear hars_root__
+if ~license('test', 'Statistics_Toolbox')
+    warning('setup:noStatistics', ...
+        'The Statistics and Machine Learning Toolbox is required (mvnrnd, quantile, gamrnd).');
+end
+fprintf('[setup] added code/core and code/third_party under %s\n', repo_root__);
+clear repo_root__

@@ -41,13 +41,17 @@ __all__ = [
 
 
 def _has(output, name: str) -> bool:
-    """Field presence for both scipy.io.loadmat conventions.
+    """Field presence for the three ways a saved ``output`` struct is loaded.
 
-    Supports ``struct_as_record=False`` (attribute access) and the default
-    record-array loading (``output['name'].item()`` with ``squeeze_me=True``).
+    ``scipy.io.loadmat`` with ``struct_as_record=False`` (attribute access),
+    ``scipy.io.loadmat`` with the default record array
+    (``output['name'].item()`` with ``squeeze_me=True``), and an ``h5py`` group
+    for a file saved with ``-v7.3`` (``h5py.File(path)['output']``).
     """
     if hasattr(output, "dtype") and getattr(output.dtype, "names", None):
         return name in output.dtype.names
+    if hasattr(output, "keys"):
+        return name in output
     return hasattr(output, name)
 
 
@@ -55,6 +59,8 @@ def _get(output, name: str) -> np.ndarray:
     if hasattr(output, "dtype") and getattr(output.dtype, "names", None):
         f = output[name]
         return np.asarray(f.item() if getattr(f, "size", None) == 1 else f)
+    if hasattr(output, "keys"):
+        return np.asarray(output[name]).squeeze()
     return np.asarray(getattr(output, name))
 
 

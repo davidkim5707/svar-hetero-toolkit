@@ -7,8 +7,8 @@
 %==========================================================================
 %% Data loading and setting
 
-% Add core/ and third_party/ (repository root) to the MATLAB path
-addpath(genpath(fullfile('..','..','core')), genpath(fullfile('..','..','third_party')));
+% Add code/core and code/third_party to the MATLAB path
+addpath(genpath(fullfile('..','..','code','core')), genpath(fullfile('..','..','code','third_party')));
 
 % Load data and variable names
 data_raw = load('data/Uhlig_Data_Updated.mat');
