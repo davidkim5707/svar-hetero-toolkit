@@ -73,7 +73,7 @@ Cite the paper whose sampler you use. `CITATION.cff` holds the machine-readable 
 
 > Kim, D. and T. Zha (2026). *Sharpening Economic Interpretation with HARS*. NBER Working Paper w35483.
 
-> Kim, D. (2026). *How the Financing of Balance-Sheet Policy Shapes Its Effects*. Job market paper.
+> Kim, D. (2026). *How the Financing of Balance-Sheet Policy Shapes Its Effects*. SSRN Working Paper 7214338. https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7214338
 
 ## License
 

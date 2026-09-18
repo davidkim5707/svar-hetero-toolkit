@@ -37,10 +37,13 @@ preferred-citation:
   year: 2026
   url: "https://www.nber.org/papers/w35483"
 references:
-  - type: unpublished
+  - type: report
     title: "How the Financing of Balance-Sheet Policy Shapes Its Effects"
     authors:
       - family-names: Kim
         given-names: Dawis
+    institution:
+      name: SSRN
+    number: "7214338"
     year: 2026
     url: "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7214338"
