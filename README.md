@@ -1,4 +1,4 @@
-# hars
+# svar-hetero-toolkit
 
 MATLAB code for Bayesian structural VARs with heteroskedastic shocks, identified with sign, zero, and narrative restrictions.
 

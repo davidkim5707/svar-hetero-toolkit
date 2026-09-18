@@ -1,5 +1,5 @@
 cff-version: 1.2.0
-title: "hars: MATLAB code for the HARS and HARS-Z samplers"
+title: "svar-hetero-toolkit: MATLAB code for structural VARs with heteroskedastic shocks"
 message: >-
   If you use HARS, please cite the paper listed under preferred-citation.
   If you use HARS-Z, please cite Kim (2026), listed under references.
@@ -9,7 +9,7 @@ authors:
     given-names: Dawis
   - family-names: Zha
     given-names: Tao
-repository-code: "https://github.com/davidkim5707/hars"
+repository-code: "https://github.com/davidkim5707/svar-hetero-toolkit"
 keywords:
   - structural vector autoregression
   - heteroskedasticity
