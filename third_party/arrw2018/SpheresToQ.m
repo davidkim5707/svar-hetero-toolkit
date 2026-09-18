@@ -1,3 +1,4 @@
+% Source: replication package of Arias, Rubio-Ramirez, and Waggoner (2018, Econometrica).
 function q = SpheresToQ(x, Z_IRF, nvar)
 %
 %  Z_IRF(j) - z(j) x n matrix of full row rank

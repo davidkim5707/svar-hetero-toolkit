@@ -1,3 +1,4 @@
+% Source: replication package of Arias, Rubio-Ramirez, and Waggoner (2018, Econometrica).
 function Df = NumericalDerivative(f, x, epsilon)
 %
 %  x - a vector of length n

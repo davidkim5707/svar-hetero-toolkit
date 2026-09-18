@@ -1,3 +1,4 @@
+% Source: replication package of Arias, Rubio-Ramirez, and Waggoner (2018, Econometrica).
 function X_perp = perp(X)
 %
 % Computes a n x (n-m) perpendicular component of the n x m matrix X in a

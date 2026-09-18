@@ -1,3 +1,4 @@
+% Source: replication package of Arias, Rubio-Ramirez, and Waggoner (2018, Econometrica).
 function x = LogAbsDet(X)
 % 
 % Computes the log of the absolute value of the determinant of the square matrix

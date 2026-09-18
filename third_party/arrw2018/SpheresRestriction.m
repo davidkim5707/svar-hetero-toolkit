@@ -1,3 +1,4 @@
+% Source: replication package of Arias, Rubio-Ramirez, and Waggoner (2018, Econometrica).
 function y = SpheresRestriction(x,Z_IRF,n)
 %
 %  Z(j) - z(j) x n matrix of full row rank

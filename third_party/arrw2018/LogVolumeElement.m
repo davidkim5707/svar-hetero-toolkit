@@ -1,3 +1,4 @@
+% Source: replication package of Arias, Rubio-Ramirez, and Waggoner (2018, Econometrica).
 function ve = LogVolumeElement(f,x,h)
 %
 %  Returns the log of the volume element of f restricted to the set of points x
