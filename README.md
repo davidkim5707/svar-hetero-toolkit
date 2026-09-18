@@ -1,42 +1,86 @@
 # hars
 
-MATLAB code for the HARS sampler of Dawis Kim and [Tao Zha](http://www.tzha.net/), "Sharpening Economic Interpretation with HARS" ([NBER Working Paper w35483](https://www.nber.org/papers/w35483)). HARS combines shock volatility with sign and narrative restrictions in a structural VAR. The paper describes the models. This document describes the code.
+MATLAB code for two samplers for structural VARs with heteroskedastic shocks.
+
+**HARS** combines shock volatility with sign and narrative restrictions. It is the sampler of Dawis Kim and [Tao Zha](http://www.tzha.net/), "Sharpening Economic Interpretation with HARS" ([NBER Working Paper w35483](https://www.nber.org/papers/w35483)).
+
+**HARS-Z** extends HARS to exact zero restrictions on impulse responses. It is the sampler of Dawis Kim, "How the Financing of Balance-Sheet Policy Shapes Its Effects" ([SSRN](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7214338)).
+
+The papers describe the models. This document describes the code.
 
 ```matlab
 cd replications/kim_zha2026_hars
-main_oil                    % the oil application, start to finish
+main_oil                    % HARS, the oil application, start to finish
 ```
 
-Requirements are MATLAB R2020a or newer, for `exportgraphics`. The Parallel Computing Toolbox is optional.
+```matlab
+cd examples
+ex01_harsz_balance_sheet    % HARS-Z, an eight-variable monthly U.S. SVAR
+```
+
+Requirements are MATLAB R2020a or newer, for `exportgraphics`, with the Statistics and Machine Learning Toolbox. The Parallel Computing Toolbox is optional. The Optimization Toolbox is needed only when `options.max_compute` selects `fmincon` for the posterior mode. The shipped drivers use `csminwel`.
+
+## Which sampler
+
+| Restrictions | Sampler | Paper | Start from |
+|---|---|---|---|
+| Sign and narrative | `core/hars.m` | Kim and Zha (2026) | `replications/kim_zha2026_hars/run_oil.m` |
+| Sign, narrative, and zero | `core/harsz.m` | Kim (2026) | `examples/ex01_harsz_balance_sheet.m` |
+
+With `options.ZeroRestrictions` empty, `harsz.m` runs the HARS path.
 
 ## Repository layout
 
 | Folder | Contents |
 |---|---|
-| `core/` | The sampler `hars.m` and the routines it calls, grouped by task. |
+| `core/` | The samplers `hars.m` and `harsz.m` and the routines they call, grouped by task. |
 | `third_party/` | Code from external sources. `NOTICE.md` lists each file and its origin. |
-| `replications/kim_zha2026_hars/` | The replication package for the paper. |
+| `replications/kim_zha2026_hars/` | The replication package for Kim and Zha (2026). |
+| `examples/` | A HARS-Z example with its data. |
+| `python/` | `hars_z_weights.py`, which rebuilds the HARS-Z estimator weights from a saved output. |
+| `tests/` | Self-tests of the zero-restriction routines. |
 
 `setup.m` adds `core/` and `third_party/` to the MATLAB path. The replication drivers add the same two folders themselves.
 
 ### `core/`
 
-`hars.m` is the HARS sampler. It produces the draws, weights, IRFs, timing, and repair diagnostics. It runs as a script. The caller defines the data and an `options` struct in the workspace, and the sampler leaves its results in `output`.
+`hars.m` and `harsz.m` produce the draws, weights, IRFs, timing, and repair diagnostics. Each runs as a script. The caller defines the data and an `options` struct in the workspace, and the sampler leaves its results in `output`.
 
 | Subfolder | What it is for |
 |---|---|
 | `core/rotation/` | Drawing the rotation `Q`. `gaussian_to_Q` maps Gaussian draws to a rotation, `ess_draw_Q_columnwise` updates `Q` by elliptical slice sampling, and `find_admissible_Q` and `find_admissible_Q_columnwise` search for a rotation that satisfies the restrictions. |
+| `core/zero/` | The same steps under zero restrictions. `build_zero_constraint` turns `options.ZeroRestrictions` into linear constraints on the columns of `Q`. `gaussian_to_Q_zero`, `draw_Q_zero_columnwise`, `ess_draw_Q_zero_columnwise`, and `find_admissible_Q_zero` build and update rotations that satisfy the zeros exactly. `log_volume_element_zero` computes the volume element of the construction. |
 | `core/restrictions/` | Checking restrictions. `parse_sign_restrictions`, `SignRestrictionCheck`, `check_sr_pass_cached`, and the two `checkrestrictions_per_shock` routines handle sign restrictions. `check_narrative_regime_avg`, `estimate_nrr_omega`, and `estimate_nrr_omega_fast` handle narrative restrictions. `check_bf_identification` checks the local identification condition of Bacchiocchi and Fanelli (2015). |
-| `core/posterior/` | Posterior evaluation and reduced-form tools. `bvar_posterior`, `eval_posterior`, `build_theta_cache`, `compute_Sstar`, `unpackA0_tvA`, and `resolveTvMask`. |
+| `core/posterior/` | Posterior evaluation and reduced-form tools. `eval_posterior` calls `bvar_posterior` under Gaussian errors, `bvar_posterior_thetero` under Student-t errors, and `bvar_posterior_tvA` when `A0` varies across regimes. `build_theta_cache`, `compute_Sstar`, `unpackA0_tvA`, and `resolveTvMask` support them. |
 | `core/util/` | Shared helpers. `get_opt`, `getHDs_fast`, and the post-processing helpers `wpercentile`, `mess_vfj`, and `save_slim`. |
 
 ### Using HARS on another model
 
 Each `run_<app>.m` under `replications/kim_zha2026_hars/` holds the model definition for one application. It loads the data, sets the VAR options, the sign and narrative restrictions, and the sampler settings, and calls `hars`. Copy the nearest one as a template. `run_oil.m` is the smallest, with three variables.
 
+## HARS-Z example
+
+`examples/ex01_harsz_balance_sheet.m` estimates an eight-variable monthly U.S. SVAR on 2008:M11 to 2026:M6 with four volatility regimes and Student-t errors. It identifies demand, supply, and monetary policy shocks and two balance-sheet shocks, one financed by reserves and one by ON RRP. The restrictions are sixteen sign restrictions over horizons 1 to 6, seven zero restrictions at impact, and two narrative restrictions on windows. The header of the file lists the variables and the shocks.
+
+A run with 10,000 recorded draws took about 1 hour 40 minutes on the author's desktop with an eight-worker pool. Set `NDRAW = 300` at the top of the file for a run of about 35 minutes that exercises every step. Keep `NBURN = 1000`. After a short burn-in the sampler can fail to find an admissible state to start sampling from. The example writes `examples/output/ex01_harsz_balance_sheet.mat`, about 1 GB at 10,000 draws.
+
+Zero restrictions are entries of a struct array.
+
+```matlab
+options.ZeroRestrictions = struct( ...
+    'variable_idx', {2, 5}, ...    % response of variable 2, and of variable 5
+    'shock_idx',    {1, 4}, ...    % to shock 1, and to shock 4
+    'horizon',      {0, 0}, ...    % at impact
+    'regime_idx',   {1, 1});
+```
+
+When zeros restrict two or more shocks, the retained draws carry weights. Use `output.draw_weight_final` for every weighted median and quantile. `python/hars_z_weights.py` rebuilds the same weights from the saved file.
+
+`tests/run_tests.m` runs four self-tests of the routines in `core/zero/`. Each prints its checks and raises an error on a failure.
+
 ## Replication package
 
-The package under `replications/kim_zha2026_hars/` replicates the paper's three empirical applications (monetary, oil, and fiscal) with the HARS sampler. One command produces every figure and table the package covers.
+The package under `replications/kim_zha2026_hars/` replicates the three empirical applications (monetary, oil, and fiscal) with the HARS sampler. One command produces every figure and table the package covers.
 
 ### How to run
 
@@ -100,9 +144,11 @@ The optimizer `bfgsi` writes a temporary `H.dat` in the working directory, and `
 
 ## Citation
 
-Cite the paper. `CITATION.cff` holds the machine-readable record, which GitHub's "Cite this repository" button reads.
+Cite the paper whose sampler you use. `CITATION.cff` holds the machine-readable record, which GitHub's "Cite this repository" button reads.
 
 > Kim, D. and T. Zha (2026). *Sharpening Economic Interpretation with HARS*. NBER Working Paper w35483.
+
+> Kim, D. (2026). *How the Financing of Balance-Sheet Policy Shapes Its Effects*. Job market paper.
 
 ## License
 

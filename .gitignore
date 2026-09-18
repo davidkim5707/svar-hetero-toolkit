@@ -10,9 +10,14 @@ g1.mat
 g2.mat
 g3.mat
 
-# Everything main.m writes
+# Everything the drivers and examples write
+examples/output/*
+!examples/output/.gitkeep
 replications/*/output/*
 !replications/*/output/.gitkeep
 
 # Over GitHub's 100 MB file limit. See README.md for the download link.
 replications/kim_zha2026_hars/baselines/irfs_ramirez_monetary.mat
+
+# Python
+__pycache__/

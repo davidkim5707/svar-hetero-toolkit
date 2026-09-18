@@ -6,6 +6,13 @@ function delta = drawdelta(uout, alpha, k)
 % alpha: probability of outlier (scalar or vector)
 % k: scale factor(s) for outliers (scalar or vector)
 
+% Empty k is the Gaussian case. The samplers call drawdelta(eout, [], [])
+% when options.tparam is empty, and delta stays at zero.
+if nargin >= 3 && isempty(k)
+    delta = zeros(size(uout));
+    return
+end
+
 if nargin < 2
     alpha = 0.01;
 end
