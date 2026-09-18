@@ -16,7 +16,8 @@ examples/output/*
 replications/*/output/*
 !replications/*/output/.gitkeep
 
-# Over GitHub's 100 MB file limit. See README.md for the download link.
+# Over GitHub's 100 MB file limit. Attached to the release baselines-v1;
+# replications/kim_zha2026_hars/download_baselines.m fetches it.
 replications/kim_zha2026_hars/baselines/irfs_ramirez_monetary.mat
 
 # Python

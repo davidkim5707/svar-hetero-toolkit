@@ -54,7 +54,7 @@ The figures draw their comparison bands and timing rows from four files in `base
 | `irfs_kilian_oil.mat` | Kilian and Murphy (2012) homoskedastic IRFs, the oil Figure 2 baseline. |
 | `irfs_carriero_oil_3regimes.mat` | CMT oil IRFs for Figures S2 and 5 and the timing row. |
 
-`irfs_ramirez_monetary.mat` is 348 MB, over GitHub's 100 MB file limit, and does not ship with the repository. Download it from the [replication folder on Dropbox](https://www.dropbox.com/scl/fo/i2fxistcz7r6slpc58j54/ALYBgJbM-d0D_x5k8_MiIHc?rlkey=uzhibvhrvz41keckbjjmx45bg&st=yfmw6879&dl=0) and place it in `baselines/`. Without it, `main_monetary` still runs and leaves the AR (2018) comparison out of Figure 1 and out of the timing table.
+`irfs_ramirez_monetary.mat` is 348 MB, over GitHub's 100 MB limit for tracked files, and does not ship with the repository. It is attached to the release [`baselines-v1`](https://github.com/davidkim5707/svar-hetero-toolkit/releases/tag/baselines-v1). Run `download_baselines` from this folder to fetch it, or download it by hand and place it in `baselines/`. Without it, `main_monetary` still runs and leaves the AR (2018) comparison out of Figure 1 and out of the timing table.
 
 The CMT and AR (2018) timing rows use seconds measured on the authors' hardware rather than this machine's clock. The fiscal application ships no baselines. The CMT fiscal sampler fails on this specification, with one admissible draw in 200,000 candidates. The package rebuilds the fiscal homoskedastic baseline internally.
 

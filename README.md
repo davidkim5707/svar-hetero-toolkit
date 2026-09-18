@@ -1,5 +1,7 @@
 # svar-hetero-toolkit
 
+[![tests](https://github.com/davidkim5707/svar-hetero-toolkit/actions/workflows/tests.yml/badge.svg)](https://github.com/davidkim5707/svar-hetero-toolkit/actions/workflows/tests.yml)
+
 MATLAB code for Bayesian structural VARs with heteroskedastic shocks, identified with sign, zero, and narrative restrictions.
 
 | Sampler | Restrictions | Paper |
@@ -31,9 +33,10 @@ replications/         one folder per paper, written to reproduce its figures and
 tests/                self-tests
 docs/                 reference for the options and output structs
 setup.m               adds code/ to the MATLAB path
+CHANGELOG.md          what each release contains
 ```
 
-Every folder has a `README.md` of its own.
+Every folder has a `README.md` of its own. On every push, GitHub Actions runs the self-tests and `examples/ex01_hars_oil.m` on a Linux runner.
 
 | To do this | Go to |
 |---|---|

@@ -15,7 +15,7 @@ A replication folder is named `<authors><year>_<sampler>`. It holds the drivers 
 | Subfolder | Contents |
 |---|---|
 | `data/` | The datasets the drivers read. |
-| `baselines/` | Outputs of other samplers that the figures and tables compare against. |
+| `baselines/` | Outputs of other samplers that the figures and tables compare against. A file over GitHub's 100 MB limit is attached to a release, and `download_baselines.m` fetches it. |
 | `output/` | Everything the drivers write. The repository ships it empty. |
 
 The drivers run from inside their folder and add `code/core` and `code/third_party` to the path themselves.
